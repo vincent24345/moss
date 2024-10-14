@@ -1,18 +1,23 @@
-// File: bubble_sort_basic.cpp
+// File: bubble_sort_optimized.cpp
 #include <iostream>
 using namespace std;
 
-// Function to perform basic bubble sort
+// Function to perform optimized bubble sort with an early exit
 void bubbleSort(int arr[], int n) {
+    bool swapped;
     for (int i = 0; i < n - 1; i++) {
+        swapped = false;  // Track if any swap occurs
         for (int j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 // Swap the elements
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
+                swapped = true;
             }
         }
+        // If no elements were swapped in the inner loop, break early
+        if (!swapped) break;
     }
 }
 

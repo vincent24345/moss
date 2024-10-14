@@ -1,8 +1,8 @@
-// File: merge_sort_basic.cpp
+// File: merge_sort_iterative.cpp
 #include <iostream>
 using namespace std;
 
-// Function to merge two halves of the array
+// Function to merge two subarrays
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -44,17 +44,17 @@ void merge(int arr[], int left, int mid, int right) {
     }
 }
 
-// Function to perform merge sort
-void mergeSort(int arr[], int left, int right) {
-    if (left < right) {
-        int mid = left + (right - left) / 2;
+// Function to perform iterative merge sort
+void mergeSortIterative(int arr[], int n) {
+    // Merge subarrays in bottom-up manner
+    for (int curr_size = 1; curr_size <= n - 1; curr_size = 2 * curr_size) {
+        for (int left = 0; left < n - 1; left += 2 * curr_size) {
+            int mid = min(left + curr_size - 1, n - 1);
+            int right = min(left + 2 * curr_size - 1, n - 1);
 
-        // Sort first and second halves
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-
-        // Merge the sorted halves
-        merge(arr, left, mid, right);
+            // Merge subarrays arr[left..mid] and arr[mid+1..right]
+            merge(arr, left, mid, right);
+        }
     }
 }
 
@@ -73,7 +73,7 @@ int main() {
     cout << "Unsorted array: ";
     printArray(arr, n);
 
-    mergeSort(arr, 0, n - 1);
+    mergeSortIterative(arr, n);
 
     cout << "Sorted array: ";
     printArray(arr, n);
